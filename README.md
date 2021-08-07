@@ -20,3 +20,5 @@ node index
 ```
 
 Note: checking every ranked beatmap can take a very long time as there are currently over 80k ranked maps, so keep that in mind. You can change the time interval between each api call in the index.js, however i do not recommend it as it's already quite low at 200ms.
+
+![](https://pek.li/7657xx.gif)
