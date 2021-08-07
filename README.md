@@ -4,6 +4,7 @@
 ### Requirements
 - Node.js (https://nodejs.org)
 - osu! account (https://osu.ppy.sh)
+- Git (https://git-scm.com/)
 
 ### Setup
 ```Bash
