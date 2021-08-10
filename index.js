@@ -8,7 +8,7 @@ const apiKey = prompt('Enter API Key: ');
 let beatmaps = '';
 let beatmapIds = '';
 
-fs.writeFile(userID + '.csv', '', (err) => {
+fs.writeFile(userID + '.csv', 'score_id,user_id,beatmap_id,score,count300,count100,count50,countmiss,combo,perfect,enabled_mods,date_played,rank,pp,replay_available\n', (err) => {
     if (err) throw err;
   });
 
