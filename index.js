@@ -1,5 +1,5 @@
 require('es6-promise').polyfill();
-
+const axios = require('axios');
 const originalFetch = require('isomorphic-fetch');
 const fetch = require('fetch-retry')(originalFetch)
 const fs = require('fs');
@@ -10,13 +10,14 @@ const apiKey = prompt('Enter API Key: ');
 
 let beatmaps = '';
 let beatmapIds = '';
+let scores = [];
 
 fs.writeFile(userID + '.csv', 'score_id,user_id,beatmap_id,score,count300,count100,count50,countmiss,combo,perfect,enabled_mods,date_played,rank,pp,replay_available\n', (err) => {
     if (err) throw err;
   });
 
 async function getMaps () {
-    beatmaps = await fetch('https://osu.respektive.pw/beatmaps')
+    beatmaps = await axios.get('https://osu.respektive.pw/beatmaps')
     beatmapIds = beatmaps.data.ranked.beatmaps;
 }
 async function getScores () {
