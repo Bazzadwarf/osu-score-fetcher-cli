@@ -4,6 +4,7 @@
   "description": "fetch best score of a user for every ranked beatmap",
   "main": "index.js",
   "scripts": {
+    "start": "git pull; npm i; node index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "respektive",
