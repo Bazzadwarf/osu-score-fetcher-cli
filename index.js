@@ -1,4 +1,7 @@
-const axios = require('axios');
+require('es6-promise').polyfill();
+
+const originalFetch = require('isomorphic-fetch');
+const fetch = require('fetch-retry')(originalFetch)
 const fs = require('fs');
 const prompt = require('prompt-sync')({sigint: true});
 
@@ -13,29 +16,38 @@ fs.writeFile(userID + '.csv', 'score_id,user_id,beatmap_id,score,count300,count1
   });
 
 async function getMaps () {
-    beatmaps = await axios.get('http://osu.respektive.pw/beatmaps')
+    beatmaps = await fetch('https://osu.respektive.pw/beatmaps')
     beatmapIds = beatmaps.data.ranked.beatmaps;
 }
 async function getScores () {
     beatmapIds.forEach(function (id, i) {
         setTimeout( function () {
-            axios.get('https://osu.ppy.sh/api/get_scores?k=' + apiKey + '&b=' + id + '&u=' + userID + '&limit=1')
-            .then(response => {
-                if (response.data[0] != undefined) {
-                fs.appendFile(userID + '.csv', response.data[0].score_id + ',' + response.data[0].user_id + ',' + id + ',' + response.data[0].score + ',' + 
-                response.data[0].count300 + ',' + response.data[0].count100 + ',' + response.data[0].count50 + ',' + response.data[0].countmiss + ',' + 
-                response.data[0].maxcombo + ',' + response.data[0].perfect + ',' + response.data[0].enabled_mods + ',' + response.data[0].date + ',' +
-                response.data[0].rank + ',' + response.data[0].pp + ',' + response.data[0].replay_available + '\n', function (err) {
-                    if (err) throw err;
+            fetch('https://osu.ppy.sh/api/get_scores?k=' + apiKey + '&b=' + id + '&u=' + userID + '&limit=1',{
+                retries: 3,
+                retryDelay: 1000,
+                retryOn: function(attempt, error, response) {
+                    if (error !== null || response.status >= 400) {
+                      console.log(`retrying, attempt number ${attempt + 1}`);
+                      return true;
+                    }
+                }
+              })
+              .then(function(response) {
+                return response.json()
+                })
+                .then(function(data) {
+                    scores.push(data[0]);
+                    fs.appendFile(userID + '.csv', data[0].score_id + ',' + data[0].user_id + ',' + id + ',' + data[0].score + ',' + 
+                    data[0].count300 + ',' + data[0].count100 + ',' + data[0].count50 + ',' + data[0].countmiss + ',' + 
+                    data[0].maxcombo + ',' + data[0].perfect + ',' + data[0].enabled_mods + ',' + data[0].date + ',' +
+                    data[0].rank + ',' + data[0].pp + ',' + data[0].replay_available + '\n', function (err) {
+                        if (err) throw err;
+                    });
+                    console.log(scores.length + '/' + beatmapIds.length);
+                })
+                .catch(function(error) {
+                    console.log(error);
                 });
-            } else {
-                return;
-            }
-            })
-            .catch(error => {
-                console.log(error);
-            });
-            console.log(i + 1 + '/' + beatmapIds.length);
         //time interval between each api call in ms
         }, i * 200);
 })
