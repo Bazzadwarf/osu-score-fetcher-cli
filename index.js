@@ -36,7 +36,7 @@ async function getScores () {
                 console.log(error);
             });
             console.log(i + 1 + '/' + beatmapIds.length);
-        
+        //time interval between each api call in ms
         }, i * 200);
 })
 }
