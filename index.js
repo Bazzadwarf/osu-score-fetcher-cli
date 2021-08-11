@@ -58,12 +58,11 @@ async function getScores () {
                     data[0].rank + ',' + data[0].pp + ',' + data[0].replay_available + '\n', function (err) {
                         if (err) throw err;
                     });   
+                    console.log('(' + scores.length + '/' + beatmapIds.length + '): ' + 'found score on beatmap id: ' + id);
                 })
                 .catch(function(error) {
-                    console.log('no score found on beatmap id: ' + id);
+                    console.log('(' + scores.length + '/' + beatmapIds.length + '): ' + 'no score found on beatmap id: ' + id);
                 });
-        console.log(scores.length + 1 + '/' + beatmapIds.length);
-       
     }
 }
 
