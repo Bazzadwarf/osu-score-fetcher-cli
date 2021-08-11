@@ -7,33 +7,41 @@ const prompt = require('prompt-sync')({sigint: true});
 
 const userID = prompt('Enter User ID to check: ');
 const apiKey = prompt('Enter API Key: ');
-const loved = prompt('Include Loved maps?(yes/no) ', "no")
+const loved = prompt('Include Loved maps (yes/no)? ', "no")
+const sr_range = prompt('Star rating range (0-12): ', "0-12")
+const start_date = prompt('Start Date (2007-01-01): ', "2007-01-01")
+const end_date = prompt('End Date (2022-01-01): ', "2022-01-01")
 
 let beatmaps = '';
 let beatmapIds = '';
 let scores = [];
+
+const sleep = ms => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+};  
 
 fs.writeFile(userID + '.csv', 'score_id,user_id,beatmap_id,score,count300,count100,count50,countmiss,combo,perfect,enabled_mods,date_played,rank,pp,replay_available\n', (err) => {
     if (err) throw err;
   });
 
 async function getMaps () {
-    beatmaps = await axios.get('https://osu.respektive.pw/beatmaps')
+    beatmaps = await axios.get(`https://osu.respektive.pw/beatmaps?star_rating=${sr_range}&from=${start_date}&to=${end_date}`)
     beatmapIds = beatmaps.data.ranked.beatmaps;
     if (loved != "no") {
         beatmapIds = beatmapIds.concat(beatmaps.data.loved.beatmaps);
     }
 }
 async function getScores () {
-    beatmapIds.forEach(function (id, i) {
-        setTimeout( function () {
+    for (const id of beatmapIds) {
+            //time interval between each api call in ms
+            await sleep(2000);
+
             fetch('https://osu.ppy.sh/api/get_scores?k=' + apiKey + '&b=' + id + '&u=' + userID + '&limit=1',{
                 retries: 3,
                 retryDelay: 1000,
                 retryOn: function(attempt, error, response) {
                     if (error !== null || response.status >= 400) {
                       console.log(`retrying, attempt number ${attempt + 1}`);
-                      return true;
                     }
                 }
               })
@@ -52,11 +60,11 @@ async function getScores () {
                 .catch(function(error) {
                     console.log('no score found on beatmap id: ' + id);
                 });
-            console.log(i + 1 + '/' + beatmapIds.length);
-        //time interval between each api call in ms
-        }, i * 200);
-})
+        console.log(scores.length + 1 + '/' + beatmapIds.length);
+       
+    }
 }
+
 async function main(){
     await getMaps();
     getScores();
