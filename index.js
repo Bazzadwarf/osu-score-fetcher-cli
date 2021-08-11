@@ -7,7 +7,7 @@ const prompt = require('prompt-sync')({sigint: true});
 
 const userID = prompt('Enter User ID to check: ');
 const apiKey = prompt('Enter API Key: ');
-const loved = prompt('Include Loved maps (yes/no)? ', "no")
+const loved = prompt('Include Loved maps (yes/no/only)? ', "no")
 const sr_range = prompt('Star rating range (0-12): ', "0-12")
 const start_date = prompt('Start Date (2007-01-01): ', "2007-01-01")
 const end_date = prompt('End Date (2022-01-01): ', "2022-01-01")
@@ -27,14 +27,16 @@ fs.writeFile(userID + '.csv', 'score_id,user_id,beatmap_id,score,count300,count1
 async function getMaps () {
     beatmaps = await axios.get(`https://osu.respektive.pw/beatmaps?star_rating=${sr_range}&from=${start_date}&to=${end_date}`)
     beatmapIds = beatmaps.data.ranked.beatmaps;
-    if (loved != "no") {
+    if (loved == "yes") {
         beatmapIds = beatmapIds.concat(beatmaps.data.loved.beatmaps);
+    } else if (loved == "only") {
+        beatmapIds = beatmaps.data.loved.beatmaps;
     }
 }
 async function getScores () {
     for (const id of beatmapIds) {
             //time interval between each api call in ms
-            await sleep(2000);
+            await sleep(200);
 
             fetch('https://osu.ppy.sh/api/get_scores?k=' + apiKey + '&b=' + id + '&u=' + userID + '&limit=1',{
                 retries: 3,
