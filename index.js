@@ -7,7 +7,8 @@ const prompt = require('prompt-sync')({sigint: true});
 
 const userID = prompt('Enter User ID to check: ');
 const apiKey = prompt('Enter API Key: ');
-const loved = prompt('Include Loved maps (yes/no/only)? ', "no")
+const interval = prompt('Time interval between API calls in ms (500): ', 500);
+const loved = prompt('Include Loved maps [yes/no/only](no)? ', "no")
 const sr_range = prompt('Star rating range (0-12): ', "0-12")
 const start_date = prompt('Start Date (2007-01-01): ', "2007-01-01")
 const end_date = prompt('End Date (2022-01-01): ', "2022-01-01")
@@ -35,8 +36,7 @@ async function getMaps () {
 }
 async function getScores () {
     for (const id of beatmapIds) {
-            //time interval between each api call in ms
-            await sleep(200);
+            await sleep(interval);
 
             fetch('https://osu.ppy.sh/api/get_scores?k=' + apiKey + '&b=' + id + '&u=' + userID + '&limit=1',{
                 retries: 3,
