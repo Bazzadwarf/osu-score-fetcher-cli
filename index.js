@@ -10,6 +10,7 @@ const apiKey = prompt('Enter API Key: ');
 const interval = prompt('Time interval between API calls in ms (500): ', 500);
 const loved = prompt('Include Loved maps [yes/no/only](no)? ', "no")
 const sr_range = prompt('Star rating range (0-12): ', "0-12")
+const tags = prompt('Tags separated by "," (leave blank for no tags): ', "")
 const start_date = prompt('Start Date (2007-01-01): ', "2007-01-01")
 const end_date = prompt('End Date (2022-01-01): ', "2022-01-01")
 
@@ -26,7 +27,7 @@ fs.writeFile(userID + '.csv', 'score_id,user_id,beatmap_id,score,count300,count1
   });
 
 async function getMaps () {
-    beatmaps = await axios.get(`https://osu.respektive.pw/beatmaps?star_rating=${sr_range}&from=${start_date}&to=${end_date}`)
+    beatmaps = await axios.get(`https://osu.respektive.pw/beatmaps?star_rating=${sr_range}&tags=${tags}&from=${start_date}&to=${end_date}`)
     beatmapIds = beatmaps.data.ranked.beatmaps;
     if (loved == "yes") {
         beatmapIds = beatmapIds.concat(beatmaps.data.loved.beatmaps);
