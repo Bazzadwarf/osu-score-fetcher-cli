@@ -26,4 +26,4 @@ node index
 
 Default values for prompts are in parentheses
 
-![](https://pek.li/7657xx.gif)
+![](https://pek.li/9ph036.gif)
