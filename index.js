@@ -37,34 +37,36 @@ async function getMaps () {
 }
 async function getScores () {
     for (const id of beatmapIds) {
-            await sleep(interval);
-
-            fetch('https://osu.ppy.sh/api/get_scores?k=' + apiKey + '&b=' + id + '&u=' + userID + '&limit=1',{
-                retries: 3,
-                retryDelay: 1000,
-                retryOn: function(attempt, error, response) {
-                    if (error !== null || response.status >= 400) {
-                      console.log(`retrying, attempt number ${attempt + 1}`);
-                    }
-                }
-              })
-              .then(function(response) {
-                return response.json()
-                })
-                .then(function(data) {
+        await sleep(interval);
+        let keepTrying;
+        do {
+            try {
+                await fetch('https://osu.ppy.sh/api/get_scores?k=' + apiKey + '&b=' + id + '&u=' + userID + '&limit=1')
+                .then(async function(response) {
+                    data = await response.json();
                     scores.push(data[0]);
-                    fs.appendFile(userID + '.csv', data[0].score_id + ',' + data[0].user_id + ',' + id + ',' + data[0].score + ',' + 
-                    data[0].count300 + ',' + data[0].count100 + ',' + data[0].count50 + ',' + data[0].countmiss + ',' + 
-                    data[0].maxcombo + ',' + data[0].perfect + ',' + data[0].enabled_mods + ',' + data[0].date + ',' +
-                    data[0].rank + ',' + data[0].pp + ',' + data[0].replay_available + '\n', function (err) {
-                        if (err) throw err;
-                    });   
-                    console.log('(' + scores.length + '/' + beatmapIds.length + '): ' + 'found score on beatmap id: ' + id);
-                })
-                .catch(function(error) {
-                    console.log('(' + scores.length + '/' + beatmapIds.length + '): ' + 'no score found on beatmap id: ' + id);
-                });
-    }
+                        fs.appendFile(userID + '.csv', data[0].score_id + ',' + data[0].user_id + ',' + id + ',' + data[0].score + ',' + 
+                        data[0].count300 + ',' + data[0].count100 + ',' + data[0].count50 + ',' + data[0].countmiss + ',' + 
+                        data[0].maxcombo + ',' + data[0].perfect + ',' + data[0].enabled_mods + ',' + data[0].date + ',' +
+                        data[0].rank + ',' + data[0].pp + ',' + data[0].replay_available + '\n', function (err) {
+                            if (err) throw err;
+                        });
+                        keepTrying = false;
+                    });
+            } catch (err) {
+                if (data.length) {
+                    keepTrying = true;
+                    console.error("retrying");
+                }
+              }
+        } while (keepTrying)
+    
+        if (data.length) {
+            console.log('(' + scores.length + '/' + beatmapIds.length + '): ' + 'found score on beatmap id: ' + id);
+        } else {
+            console.log('(' + scores.length + '/' + beatmapIds.length + '): ' + 'no score found on beatmap id: ' + id);
+        }
+}
 }
 
 async function main(){
