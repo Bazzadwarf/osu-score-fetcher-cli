@@ -22,7 +22,7 @@ npm i
 ```
 Start with
 ```Bash
-node index
+npm run start
 ```
 
 Default values for prompts are in parentheses
