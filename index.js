@@ -64,7 +64,7 @@ async function getScores () {
                     if (retries <= 6) {
                         keepTrying = true;
                         retries += 1;
-                        sleep(2 ** retries * 100);
+                        await sleep(2 ** retries * 100);
                         console.error("retry: " + retries);  
                     } else {
                         keepTrying = false;
