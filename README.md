@@ -5,7 +5,7 @@
 - Node.js (https://nodejs.org)
 - osu! account (https://osu.ppy.sh)
 - osu! API Key (https://osu.ppy.sh/p/api/)
-- Git (https://git-scm.com/)
+- Git (https://git-scm.com/downloads)
 
 ### Setup
 ```Bash
