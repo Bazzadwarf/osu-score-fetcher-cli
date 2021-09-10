@@ -28,3 +28,6 @@ npm run start
 Default values for prompts are in parentheses. In general if you just want to check every ranked map you don't need to input anything after entering your API key.
 
 ![](https://pek.li/mxj7qw.gif)
+
+### Advanced Usage (By @WitchOfFrost)
+To be added
