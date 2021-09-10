@@ -15,7 +15,6 @@
     "node-fetch": "^2.6.1",
     "prompt-sync": "^4.2.0"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/respektive/osu-score-fetcher-cli.git"

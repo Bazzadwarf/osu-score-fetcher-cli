@@ -28,3 +28,6 @@ npm run start
 Default values for prompts are in parentheses
 
 ![](https://pek.li/9ph036.gif)
+
+### Advanced Usage (By @WitchOfFrost)
+To be added
