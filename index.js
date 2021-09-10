@@ -3,10 +3,10 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const prompt = require('prompt-sync')({ sigint: true });
 
-const userID = prompt('Enter User ID to check: ', 7511840);
-const apiKey = prompt('Enter API Key: ', "5c75e427da5619bda206c23d9d806df37dad4a8e");
+const userID = prompt('Enter User ID to check: ');
+const apiKey = prompt('Enter API Key: ');
 const interval = prompt('Time interval between API calls in ms (500): ', 500);
-const advancedQuery = prompt('Do you want to use advanced mode? (no) ', "yes");
+const advancedQuery = prompt('Do you want to use advanced mode? (no) ', "no");
 
 let loved;
 let sr_range;
