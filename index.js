@@ -3,10 +3,10 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const prompt = require('prompt-sync')({ sigint: true });
 
-const userID = prompt('Enter User ID to check: ');
-const apiKey = prompt('Enter API Key: ');
+const userID = prompt('Enter User ID to check: ', 7511840);
+const apiKey = prompt('Enter API Key: ', "5c75e427da5619bda206c23d9d806df37dad4a8e");
 const interval = prompt('Time interval between API calls in ms (500): ', 500);
-const advancedQuery = prompt('Do you want to use advanced mode? (no) ', "no");
+const advancedQuery = prompt('Do you want to use advanced mode? (no) ', "yes");
 
 let loved;
 let sr_range;
@@ -46,6 +46,7 @@ fs.writeFile(userID + '.csv', 'score_id,user_id,beatmap_id,score,count300,count1
 async function advancedGetMaps() {
     beatmaps = await axios.get(`https://osu.respektive.pw/beatmaps/advanced?json=${query}`);
     beatmapIds = beatmaps.data.maps;
+    console.log("Got " + beatmapIds.length + " Maps, failed " + beatmaps.data.checksFailed + " checks.");
 }
 
 async function getMaps() {
