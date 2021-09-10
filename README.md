@@ -31,8 +31,8 @@ Default values for prompts are in parentheses. In general if you just want to ch
 
 ![](https://pek.li/mxj7qw.gif)
 
-### Advanced Usage (By @WitchOfFrost )
-Before starting with advanced mode, please make sure you understand the basic [https://www.w3schools.com/js/js_json_syntax.asp](JSON Syntax).
+### Advanced Usage (By [@WitchOfFrost](https://github.com/witchoffrost))
+Before starting with advanced mode, please make sure you understand the basic [JSON Syntax](https://www.w3schools.com/js/js_json_syntax.asp).
 
 Query Parameters need to be enclosed by aposthrophes, and the query itself needs to be enclosed by curly brackets.
 
@@ -52,8 +52,10 @@ Quick Reference:
 Following parameters are available:  
 `beatmap_id - [Integer]!WHOLE !VALID` - The Beatmap ID.  
 `beatmapset_id - [Integer]!WHOLE !VALID` - The Beatmap-Set ID.  
-`approved - [Operator]{<,>,=, [1]}[Integer{0, 1, 2, 3, 4}[1]]!WHOLE !VALID` - The Approved Status of maps. (4 = loved, 3 = qualified, 2 = approved, 1 = ranked, 0 = pending, -1 = WIP, -2 = graveyard)  
-`mode - [Operator]{<,>,=, [1]}[Integer{0, 1, 2, 3}[1]]!WHOLE !VALID` - The Gamemode of the maps. (0 = osu!, 1 = Taiko, 2 = CTB, 3 = Mania)  
+`approved - [Operator]{<,>,=, [1]}[Integer{0, 1, 2, 3, 4}[1]]!WHOLE !VALID` - The Approved Status of maps.  
+(4 = loved, 3 = qualified, 2 = approved, 1 = ranked, 0 = pending, -1 = WIP, -2 = graveyard)  
+`mode - [Operator]{<,>,=, [1]}[Integer{0, 1, 2, 3}[1]]!WHOLE !VALID` - The Gamemode of the maps.  
+(0 = osu!, 1 = Taiko, 2 = CTB, 3 = Mania)  
 `total_length - [Operator]{<,>,=, [1]}[Integer]!WHOLE !VALID` - The Total Lenght of the map in seconds.  
 `hit_length - [Operator]{<,>,=, [1]}[Integer]!WHOLE !VALID` - The Drain Lenght of the map in seconds.  
 `difficulty - [String]!ESC` - The Difficulty name of the map.  
