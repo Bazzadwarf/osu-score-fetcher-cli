@@ -14,10 +14,14 @@ let tags;
 let start_date;
 let end_date;
 let query;
+let length_min;
+let length_max;
 
 if (advancedQuery == "no") {
     loved = prompt('Include Loved maps [yes/no/only](no)? ', "no");
     sr_range = prompt('Star rating range (0-12): ', "0-12");
+    length_min = prompt('Minimum length for beatmaps in seconds: ');
+    length_max = prompt('Maximum length for beatmaps in seconds: ');
     tags = prompt('Tags separated by "," (leave blank for no tags): ', "");
     start_date = prompt('Start Date (2007-01-01): ', "2007-01-01");
     end_date = prompt('End Date (2022-01-01): ', "2022-01-01");
