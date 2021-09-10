@@ -25,6 +25,8 @@ Start with
 npm run start
 ```
 
+If it throws an error when updating or starting regarding the `package-lock.json` you can just delete that file and try again.
+
 Default values for prompts are in parentheses. In general if you just want to check every ranked map you don't need to input anything after entering your API key.
 
 ![](https://pek.li/mxj7qw.gif)
