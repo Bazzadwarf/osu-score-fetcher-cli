@@ -5,7 +5,7 @@
 - Node.js (https://nodejs.org)
 - osu! account (https://osu.ppy.sh)
 - osu! API Key (https://osu.ppy.sh/p/api/)
-- Git (https://git-scm.com/)
+- Git (https://git-scm.com/downloads)
 
 ### Setup
 ```Bash
@@ -25,9 +25,9 @@ Start with
 npm run start
 ```
 
-Default values for prompts are in parentheses
+Default values for prompts are in parentheses. In general if you just want to check every ranked map you don't need to input anything after entering your API key.
 
-![](https://pek.li/9ph036.gif)
+![](https://pek.li/mxj7qw.gif)
 
 ### Advanced Usage (By @WitchOfFrost)
 To be added

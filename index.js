@@ -45,7 +45,7 @@ async function advancedGetMaps() {
 }
 
 async function getMaps() {
-    beatmaps = await axios.get(`https://osu.respektive.pw/beatmaps?star_rating=${sr_range}&tags=${tags}&from=${start_date}&to=${end_date}`);
+    beatmaps = await axios.get(`https://osu.respektive.pw/beatmaps?star_rating=${sr_range}&tags=${tags}&from=${start_date}&to=${end_date}&length_min=${length_min}&length_max=${length_max}`)
     beatmapIds = beatmaps.data.ranked.beatmaps;
     if (loved == "yes") {
         beatmapIds = beatmapIds.concat(beatmaps.data.loved.beatmaps);
@@ -83,7 +83,7 @@ async function getScores() {
                     if (retries <= 6) {
                         keepTrying = true;
                         retries += 1;
-                        sleep(2 ** retries * 100);
+                        await sleep(2 ** retries * 100);
                         console.error("retry: " + retries);
                     } else {
                         keepTrying = false;
