@@ -1,6 +1,8 @@
 # osu-score-fetcher-cli
  Fetch a users best osu! score for every ranked beatmap. Outputs scores in csv format used for import in [osu!alternative](https://twitter.com/albino_rhino12/status/1352293214536015880?lang=en)
- 
+
+I know that not everyone knows how to run commands so i made a [little script](https://github.com/respektive/osu-score-fetcher-cli/releases/tag/install-script) that should make things a bit easier.
+
 ### Requirements
 - Node.js (https://nodejs.org)
 - osu! account (https://osu.ppy.sh)
