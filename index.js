@@ -16,6 +16,7 @@ let end_date;
 let query;
 let length_min;
 let length_max;
+let mode;
 
 if (advancedQuery == "no") {
     loved = prompt('Include Loved maps [yes/no/only](no)? ', "no");
@@ -25,6 +26,7 @@ if (advancedQuery == "no") {
     tags = prompt('Tags separated by "," (leave blank for no tags): ', "");
     start_date = prompt('Start Date (2007-01-01): ', "2007-01-01");
     end_date = prompt('End Date (2022-01-01): ', "2022-01-01");
+    mode = prompt('Mode to query (0 osu!, 1 taiko, 2 catch, 3 mania): ', "0");
 } else if (advancedQuery == "yes") {
     query = prompt('What is your query? ');
 }
@@ -50,12 +52,18 @@ async function advancedGetMaps() {
 }
 
 async function getMaps() {
-    beatmaps = await axios.get(`https://osu.respektive.pw/beatmaps?star_rating=${sr_range}&tags=${tags}&from=${start_date}&to=${end_date}&length_min=${length_min}&length_max=${length_max}`)
+    beatmaps = await axios.get(`https://osu.respektive.pw/beatmaps?mode=${mode}&star_rating=${sr_range}&tags=${tags}&from=${start_date}&to=${end_date}&length_min=${length_min}&length_max=${length_max}`)
     beatmapIds = beatmaps.data.ranked.beatmaps;
     if (loved == "yes") {
         beatmapIds = beatmapIds.concat(beatmaps.data.loved.beatmaps);
     } else if (loved == "only") {
         beatmapIds = beatmaps.data.loved.beatmaps;
+    }
+
+    if (mode > 0)
+    {
+        beatmaps = await axios.get(`https://osu.respektive.pw/beatmaps?star_rating=${sr_range}&tags=${tags}&from=${start_date}&to=${end_date}&length_min=${length_min}&length_max=${length_max}`)
+        beatmapIds = beatmapIds.concat(beatmaps.data.ranked.beatmaps);
     }
 };
 async function getScores() {
@@ -67,7 +75,7 @@ async function getScores() {
 
         do {
             try {
-                await fetch('https://osu.ppy.sh/api/get_scores?k=' + apiKey + '&b=' + id + '&u=' + userID + '&limit=1')
+                await fetch('https://osu.ppy.sh/api/get_scores?k=' + apiKey + '&b=' + id + '&u=' + userID + '&m=' + mode + '&limit=1')
                     .then(async function (response) {
                         data = await response.json();
                         scores.push(data[0]);
